@@ -1,57 +1,75 @@
 // src/pages/CourseLesson.jsx
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSpeechSynthesis, useSpeechRecognition } from "react-speech-kit";
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import { useSpeechSynthesis } from "react-speech-kit";
+import { stubCourses } from "./StudentCourses"; // make sure the path is correct
+import jsPDF from "jspdf";
 
 export default function CourseLesson() {
-  const { courseId, lessonId } = useParams(); // <-- get IDs from URL
-  const { speak } = useSpeechSynthesis();
-  const [note, setNote] = useState("");
-  const { listen, listening, stop } = useSpeechRecognition({
-    onResult: (result) => setNote(result),
-  });
+  const { courseId, lessonId } = useParams();
+  const { speak, cancel } = useSpeechSynthesis();
 
-  const lessonContent = `Welcome to course ${courseId}, lesson ${lessonId}.
-This is your lesson content.`;
+  // Find the course and lesson from stubCourses
+  const course = stubCourses.find((c) => c.id === courseId);
+  const courseTitle = course ? course.title : `Course ${courseId}`;
+  const lesson = course?.lessons.find((l) => l.id === lessonId);
+  const lessonTitle = lesson?.title || "Lesson " + lessonId;
+  
+  // Capture real lesson content from stubCourses
+  const lessonContent = lesson?.content || "No content available for this lesson.";
+
+  // Generate PDF and download
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    const lines = lessonContent.split("\n"); // preserve line breaks
+    let y = 20;
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "normal");
+
+    lines.forEach((line) => {
+      doc.text(line, 20, y);
+      y += 10; // move down
+      if (y > 280) { // add new page if content overflows
+        doc.addPage();
+        y = 20;
+      }
+    });
+
+    doc.save(`${courseTitle}-${lessonTitle}.pdf`);
+  };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Course {courseId} - Lesson {lessonId}</h2>
-      <div className="bg-white p-4 rounded-lg shadow mb-4">
-        <p className="text-gray-700 whitespace-pre-line">{lessonContent}</p>
-        <button
-          onClick={() => speak({ text: lessonContent })}
-          className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          🔊 Listen to Lesson
-        </button>
-      </div>
+    <div className="p-8 bg-gray-100 min-h-screen">
+      <Link
+        to="/dashboard/courses"
+        onClick={() => cancel()}
+        className="inline-block mb-6 text-blue-500 hover:underline font-medium"
+      >
+        ← Back to {courseTitle}
+      </Link>
 
-      <h3 className="text-xl font-semibold mb-2">Your Notes</h3>
-      <textarea
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-        rows={5}
-        className="w-full p-2 border rounded mb-2"
-        placeholder="Type or dictate your notes here..."
-      />
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        {courseTitle} - {lessonTitle}
+      </h2>
 
-      <div className="flex space-x-2">
-        {!listening ? (
+      <div className="bg-white p-6 rounded-xl shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <p className="text-gray-700 whitespace-pre-line text-lg">{lessonContent}</p>
+
+        <div className="flex flex-col md:flex-row gap-2 mt-4 md:mt-0">
           <button
-            onClick={listen}
-            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+            onClick={() => speak({ text: lessonContent })}
+            className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition"
           >
-            🎤 Start Dictation
+            🔊 Listen
           </button>
-        ) : (
+
           <button
-            onClick={stop}
-            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            onClick={downloadPDF}
+            className="px-5 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
           >
-            ⏹ Stop Dictation
+            📄 Download PDF
           </button>
-        )}
+        </div>
       </div>
     </div>
   );

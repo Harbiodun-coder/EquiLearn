@@ -39,7 +39,7 @@ const CoursesPage = () => {
               <h2 className="text-lg font-semibold">{course.title}</h2>
               <p className="text-gray-600">{course.description}</p>
               <Link
-                to={`/dashboard/courses/${course._id}`}
+                to={`/dashboard/courses/${course.id}`}
                 className="text-blue-500 hover:underline mt-2 inline-block"
               >
                 View Details →
