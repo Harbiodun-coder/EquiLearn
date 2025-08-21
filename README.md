@@ -11,11 +11,11 @@ EquiLearn is an online learning platform designed specifically for people with d
 - **Accessible Interface**: User-friendly design tailored for people with different abilities.  
 - **Responsive Design**: Works seamlessly across desktops, tablets, and mobile devices.  
 
-## Tech Stack
+## **Tech Stack**
 
-- **Frontend**: React.js, Tailwind CSS  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB
+-** Frontend:** React.js, Tailwind CSS  
+-** Backend:** Node.js, Express.js  
+-** Database:** MongoDB
 
 ## Getting Started
 
@@ -74,7 +74,6 @@ This project is licensed under the MIT License.
 
 ---
 
-Made with ❤️ to make learning **accessible for all**.
 
 ```
 
