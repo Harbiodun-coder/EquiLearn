@@ -3,12 +3,12 @@ import Course from "../models/Course.js";
 // @desc Create new course (Teacher only)
 export const createCourse = async (req, res) => {
   try {
-    const { title, description, content } = req.body;
+    const { title, description, thumbnail } = req.body;
 
     const course = await Course.create({
       title,
       description,
-      content,
+      thumbnail,
       createdBy: req.user.id,
     });
 
@@ -21,7 +21,9 @@ export const createCourse = async (req, res) => {
 // @desc Get all courses
 export const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate("createdBy", "name email");
+    const courses = await Course.find()
+      .populate("createdBy", "name email")
+      .populate("students", "name email");
     res.json(courses);
   } catch (error) {
     res.status(500).json({ message: error.message });

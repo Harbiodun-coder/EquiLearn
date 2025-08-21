@@ -2,11 +2,26 @@ import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    content: { type: String }, // could be text, video links, docs, etc.
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // teacher who created it
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }] // enrolled students
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+    },
+    thumbnail: {
+      type: String, // URL or file path
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Teacher/Admin
+    },
+    lessons: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Lesson",
+      },
+    ],
   },
   { timestamps: true }
 );

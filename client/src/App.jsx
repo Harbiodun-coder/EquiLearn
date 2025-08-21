@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -5,25 +6,25 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/dashboard/DashBoard";
+import CoursesPage from "./pages/dashboard/CoursesPage";
+import CourseLesson from "./pages/dashboard/CourseLesson";// Updated import
 
-
-// Wrapper to control Navbar visibility
 function Layout() {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/register", "/dashboard"]; // hide Navbar for dashboards
+  const hideNavbarRoutes = ["/login", "/register", "/dashboard"]; // hide navbar on these routes
 
   return (
     <>
-      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+      {!hideNavbarRoutes.some((path) => location.pathname.startsWith(path)) && <Navbar />}
       <Routes>
-        {/* Public routes */}
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected unified dashboard */}
+        {/* Protected Dashboard */}
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={
             <ProtectedRoute allowedRoles={["student", "teacher"]}>
               <Dashboard />
@@ -31,10 +32,34 @@ function Layout() {
           }
         />
 
-        {/* Fallback for unauthorized access */}
-        <Route path="/unauthorized" element={<h1>🚫 Access Denied</h1>} />
+        {/* Protected Courses */}
+        <Route
+          path="/courses"
+          element={
+            <ProtectedRoute allowedRoles={["student", "teacher"]}>
+              <CoursesPage />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route
+          path="/courses/:courseId"
+          element={
+            <ProtectedRoute allowedRoles={["student", "teacher"]}>
+              <CourseDetailPage />
+            </ProtectedRoute>
+          }
+        /> */}
+        <Route
+          path="/courses/:courseId/lessons/:lessonId"
+          element={
+            <ProtectedRoute allowedRoles={["student", "teacher"]}>
+              <CourseLesson /> {/* Updated component */}
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Catch-all redirect */}
+        {/* Fallback / Unauthorized */}
+        <Route path="/unauthorized" element={<h1>🚫 Access Denied</h1>} />
         <Route path="*" element={<Login />} />
       </Routes>
     </>
