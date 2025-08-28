@@ -11,6 +11,7 @@ import Assignments from "./Assignment";
 import UploadMaterialForm from "../../components/teacher/UploadMaterialForm.jsx";
 import MessagesPage from "./MessagesPage.jsx";
 import ProfilePage from "./ProfilePage.jsx";
+import TeacherProfile from "./TeacherProfile.jsx";
 
 export default function Dashboard() {
   const [role, setRole] = useState(null);
@@ -70,6 +71,7 @@ export default function Dashboard() {
               <>
                 <Route path="add-course" element={<AddCourse />} />
                 <Route path="courses/:courseId" element={<CourseLesson />} />
+                <Route path="profile" element={<TeacherProfile />} />
                 <Route
                   path="upload-material"
                   element={<UploadMaterialForm courses={courses} />} // <--- pass courses here
