@@ -10,6 +10,7 @@ import CourseLesson from "./CourseLesson";
 import Assignments from "./Assignment";
 import UploadMaterialForm from "../../components/teacher/UploadMaterialForm.jsx";
 import MessagesPage from "./MessagesPage.jsx";
+import ProfilePage from "./ProfilePage.jsx";
 
 export default function Dashboard() {
   const [role, setRole] = useState(null);
@@ -60,6 +61,7 @@ export default function Dashboard() {
                 <Route path="courses/:courseId" element={<CourseLesson />} />
                 <Route path="assignments" element={<Assignments />} />
                 <Route path="messages" element={<MessagesPage />} />
+                <Route path="profile" element={<ProfilePage />} />
               </>
             )}
 
