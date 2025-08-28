@@ -108,9 +108,11 @@ export default function StudentDashboard() {
               </p>
             </li>
           </ul>
-          <button className="mt-4 w-full bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition">
-            View All Messages
-          </button>
+          <Link to="/dashboard/messages">
+            <button className="mt-4 w-full bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition">
+              View All Messages
+            </button>
+          </Link>
         </div>
       </section>
     </div>
