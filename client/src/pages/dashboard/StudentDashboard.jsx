@@ -82,7 +82,7 @@ export default function StudentDashboard() {
           </ul>
           <Link to="/dashboard/assignments">
             <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">
-              View All Courses
+              View All Assignments
             </button>
           </Link>
         </div>
