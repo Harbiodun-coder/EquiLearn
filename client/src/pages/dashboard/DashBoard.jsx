@@ -6,14 +6,34 @@ import StudentDashboard from "./StudentDashboard";
 import TeacherDashboard from "./TeacherDashboard";
 import AddCourse from "./AddCourse";
 import StudentCourses from "./StudentCourses";
-import CourseLesson from "./CourseLesson"; // use this instead of LessonPage
+import CourseLesson from "./CourseLesson";
+import Assignments from "./Assignment";
+import UploadMaterialForm from "../../components/teacher/UploadMaterialForm.jsx";
 
 export default function Dashboard() {
   const [role, setRole] = useState(null);
+  const [courses, setCourses] = useState([]); // <--- add this
 
   useEffect(() => {
     const userRole = localStorage.getItem("role");
     setRole(userRole);
+
+    // fetch teacher courses
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/courses", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          },
+        });
+        const data = await res.json();
+        setCourses(data);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+      }
+    };
+
+    if (userRole === "teacher") fetchCourses();
   }, []);
 
   if (!role) return <p>Loading...</p>;
@@ -25,10 +45,11 @@ export default function Dashboard() {
         <Topbar role={role} />
         <main className="flex-1 p-6 overflow-y-auto">
           <Routes>
-            {/* Default dashboard */}
             <Route
               path="/"
-              element={role === "student" ? <StudentDashboard /> : <TeacherDashboard />}
+              element={
+                role === "student" ? <StudentDashboard /> : <TeacherDashboard />
+              }
             />
 
             {/* Student routes */}
@@ -36,6 +57,7 @@ export default function Dashboard() {
               <>
                 <Route path="courses" element={<StudentCourses />} />
                 <Route path="courses/:courseId" element={<CourseLesson />} />
+                <Route path="assignments" element={<Assignments />} />
               </>
             )}
 
@@ -44,6 +66,10 @@ export default function Dashboard() {
               <>
                 <Route path="add-course" element={<AddCourse />} />
                 <Route path="courses/:courseId" element={<CourseLesson />} />
+                <Route
+                  path="upload-material"
+                  element={<UploadMaterialForm courses={courses} />} // <--- pass courses here
+                />
               </>
             )}
           </Routes>

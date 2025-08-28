@@ -10,20 +10,25 @@ const protect = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
+      console.log("Token received:", token); // <- Debug
 
-      // verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log("Decoded JWT:", decoded); // <- Debug
 
-      // attach user to request
       req.user = await User.findById(decoded.id).select("-password");
+      // console.log("Authenticated user from DB:", req.user); // <- Debug
+
+      if (!req.user) {
+        return res.status(401).json({ message: "User not found" });
+      }
 
       next();
     } catch (error) {
+      console.error("Auth error:", error);
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
-  }
-
-  if (!token) {
+  } else {
+    console.log("No token sent!");
     return res.status(401).json({ message: "Not authorized, no token" });
   }
 };

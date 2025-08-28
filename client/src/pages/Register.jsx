@@ -5,7 +5,13 @@ import Swal from "sweetalert2";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 
 export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student", // default role
+  });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,7 +21,10 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/users/register", form);
+      const res = await axios.post(
+        "http://localhost:5000/api/users/register",
+        form
+      );
 
       Swal.fire({
         title: "Success!",
@@ -37,7 +46,10 @@ export default function Register() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 to-blue-500">
-      <form className="bg-white p-8 rounded-xl shadow-lg w-96" onSubmit={handleSubmit}>
+      <form
+        className="bg-white p-8 rounded-xl shadow-lg w-96"
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Register Your EquiLearn Account
         </h2>
@@ -71,7 +83,7 @@ export default function Register() {
         </div>
 
         {/* Password Field */}
-        <div className="mb-6 relative">
+        <div className="mb-4 relative">
           <AiOutlineLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="password"
@@ -84,6 +96,24 @@ export default function Register() {
           />
         </div>
 
+        {/* Role Selection */}
+        <div className="mb-6">
+          <label className="block text-gray-700 mb-2 font-medium">
+            Register as:
+          </label>
+          <select
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+            required
+          >
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"

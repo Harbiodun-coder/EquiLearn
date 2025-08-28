@@ -2,23 +2,9 @@ import mongoose from "mongoose";
 
 const lessonSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String, // Lesson text content
-      required: true,
-    },
-    audioUrl: {
-      type: String, // optional: generated TTS audio file
-    },
-    videoUrl: {
-      type: String, // optional: video link
-    },
-    image: {
-      type: String, // optional: image with alt-text
-    },
+    title: { type: String, required: true },
+    content: { type: String, default: "No content provided" },
+    pdfUrl: { type: String }, // optional, can be null initially
     course: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Course",

@@ -20,9 +20,6 @@ export default function Sidebar({ role }) {
               <li>
                 <Link to="/dashboard/assignments">Assignments</Link>
               </li>
-              <li>
-                <Link to="/dashboard/messages">Messages</Link>
-              </li>
             </>
           )}
 
@@ -32,10 +29,7 @@ export default function Sidebar({ role }) {
                 <Link to="/dashboard/add-course">Add Course</Link>
               </li>
               <li>
-                <Link to="/dashboard/upload">Upload Materials</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/students">My Students</Link>
+                <Link to="/dashboard/upload-material">Upload Materials</Link>
               </li>
             </>
           )}

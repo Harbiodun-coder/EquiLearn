@@ -2,7 +2,7 @@
 import express from "express";
 import Lesson from "../models/Lesson.js";
 import Course from "../models/Course.js";
-import { protect } from "../middlewares/authMiddleware.js";
+import  protect  from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
