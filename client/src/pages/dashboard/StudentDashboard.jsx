@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function StudentDashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -9,7 +10,6 @@ export default function StudentDashboard() {
           </h1>
           <p className="text-gray-600 mt-1">Here’s what’s happening today</p>
         </div>
-       
       </header>
 
       {/* Stats Section */}
@@ -20,7 +20,9 @@ export default function StudentDashboard() {
           <p className="text-gray-500 mt-1">Enrolled courses</p>
         </div>
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700">📝 Assignments</h2>
+          <h2 className="text-lg font-semibold text-gray-700">
+            📝 Assignments
+          </h2>
           <p className="text-3xl font-bold text-green-600 mt-2">2</p>
           <p className="text-gray-500 mt-1">Due this week</p>
         </div>
@@ -35,7 +37,9 @@ export default function StudentDashboard() {
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Courses */}
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">📚 My Courses</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">
+            📚 My Courses
+          </h3>
           <ul className="space-y-3">
             <li className="flex items-center justify-between">
               <span className="text-gray-700">Mathematics</span>
@@ -50,14 +54,18 @@ export default function StudentDashboard() {
               <button className="text-blue-600 hover:underline">Open</button>
             </li>
           </ul>
-          <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">
-            View All Courses
-          </button>
+          <Link to="/dashboard/courses">
+            <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">
+              View All Courses
+            </button>
+          </Link>
         </div>
 
         {/* Assignments */}
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">📝 Assignments</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">
+            📝 Assignments
+          </h3>
           <ul className="space-y-3">
             <li className="flex items-center justify-between">
               <span className="text-gray-700">Math Homework #3</span>
@@ -72,9 +80,11 @@ export default function StudentDashboard() {
               <span className="text-sm text-yellow-600">Due in 5 days</span>
             </li>
           </ul>
-          <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
-            View All Assignments
-          </button>
+          <Link to="/dashboard/assignments">
+            <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">
+              View All Courses
+            </button>
+          </Link>
         </div>
 
         {/* Messages */}
@@ -83,7 +93,9 @@ export default function StudentDashboard() {
           <ul className="space-y-3">
             <li>
               <p className="font-medium text-gray-800">Prof. Johnson</p>
-              <p className="text-sm text-gray-500">Reminder about tomorrow’s class.</p>
+              <p className="text-sm text-gray-500">
+                Reminder about tomorrow’s class.
+              </p>
             </li>
             <li>
               <p className="font-medium text-gray-800">Class Rep</p>
@@ -91,7 +103,9 @@ export default function StudentDashboard() {
             </li>
             <li>
               <p className="font-medium text-gray-800">Library</p>
-              <p className="text-sm text-gray-500">Your reserved book is ready.</p>
+              <p className="text-sm text-gray-500">
+                Your reserved book is ready.
+              </p>
             </li>
           </ul>
           <button className="mt-4 w-full bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition">
